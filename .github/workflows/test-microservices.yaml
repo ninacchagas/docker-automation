@@ -1,0 +1,98 @@
+name: Test Microservices
+
+on:
+  push:
+    branches: [aula-01]
+  pull_request:
+    branches: [aula-01]
+
+jobs:
+  test-auth-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code # checagem de código
+        uses: actions/checkout@v4
+
+      - name: Set up Python # checagem de versão do python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13.13'
+
+      - name: Install dependencies # instalação das dependencias necessarias para o projeto
+        working-directory: ./burger-app/auth-service
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests 
+        working-directory: .burger-app/auth-service
+        run: |
+          pytest -v --cov=models --cov=config --cov=controllers
+          radon cc ./models/auth-model.py
+
+
+  test-product-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code # checagem de código
+        uses: actions/checkout@v4
+
+      - name: Set up Python # checagem de versão do python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13.13'
+
+      - name: Install dependencies # instalação das dependencias necessarias para o projeto
+        working-directory: ./burger-app/product-service
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests 
+        working-directory: .burger-app/product-service
+        run: |
+          pytest -v --cov=models --cov=config --cov=controllers
+          radon cc ./models/product_model.py
+        
+
+  test-user-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code # checagem de código
+        uses: actions/checkout@v4
+
+      - name: Set up Python # checagem de versão do python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13.13'
+
+      - name: Install dependencies # instalação das dependencias necessarias para o projeto
+        working-directory: ./burger-app/user-service
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests 
+        working-directory: .burger-app/user-service
+        run: |
+          pytest -v --cov=models --cov=config --cov=controllers
+          radon cc ./models/user_model.py
+
+  test-order-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code # checagem de código
+        uses: actions/checkout@v4
+
+      - name: Set up Python # checagem de versão do python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13.13'
+
+      - name: Install dependencies # instalação das dependencias necessarias para o projeto
+        working-directory: ./burger-app/order-service
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests 
+        working-directory: .burger-app/order-service
+        run: |
+          pytest -v --cov=models --cov=config --cov=controllers
+          radon cc ./models/order_model.py
